@@ -1,0 +1,28 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_source_carddav.la
+libOpenAB_plugin_source_carddav_la_SOURCES = \
+	plugins/carddav/CardDAVStorage.cpp \
+	plugins/carddav/CalDAVStorage.cpp \
+	plugins/carddav/CardDAVHelper.cpp \
+	plugins/carddav/CalDAVHelper.cpp \
+	plugins/carddav/DAVHelper.cpp
+
+libOpenAB_plugin_source_carddav_la_CPPFLAGS = -I$(top_srcdir)/src  $(CFLAGS) $(COVERAGE_CFLAGS) $(XML2_CFLAGS)
+libOpenAB_plugin_source_carddav_la_CFLAGS = -std=gnu99
+libOpenAB_plugin_source_carddav_la_LDFLAGS = $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS) $(XML2_LIBS)
+libOpenAB_plugin_source_carddav_la_LIBADD = libOpenAB.la
+
+bin_PROGRAMS = carddav_tester
+carddav_tester_SOURCES = plugins/carddav/carddav_helper_tester.cpp \
+						 plugins/carddav/CardDAVHelper.cpp \
+						 plugins/carddav/DAVHelper.cpp
+carddav_tester_LDADD = libOpenAB.la
+carddav_tester_CPPFLAGS = -I$(top_srcdir)/src $(CFLAGS) $(XML2_CFLAGS)
+carddav_tester_LDFLAGS = -rdynamic -no-install $(XML2_LIBS)
+
+bin_PROGRAMS += caldav_tester
+caldav_tester_SOURCES = plugins/carddav/caldav_helper_tester.cpp \
+						plugins/carddav/CalDAVHelper.cpp \
+						plugins/carddav/DAVHelper.cpp
+caldav_tester_LDADD = libOpenAB.la
+caldav_tester_CPPFLAGS = -I$(top_srcdir)/src $(CFLAGS) $(XML2_CFLAGS)
+caldav_tester_LDFLAGS = -rdynamic -no-install $(XML2_LIBS)

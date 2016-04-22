@@ -1,0 +1,95 @@
+/**
+ * @addtogroup pluginGroup Plugin InterfaceAAA
+ *
+ * For more details on the Plugin interface internals
+ * see @link pluginInterface Overview and Example @endlink
+ *
+ * @page pluginInterface The Plugin Interface
+ *
+ * @tableofcontents
+ *
+ * @section pluginListSec List of available plugins
+ *
+ * For complete list of available plugins and their configuration
+ * see @link pluginGroup Plugin List @endlink
+ *
+ * @section overview Overview
+ *
+ * The plugin interface "OpenAB_Plugin" is used to implement a Plugin Based mechanism
+ * useful to keep an abstraction layer between the core and the plugins implemented.
+ *
+ * It allow the main program to define a generic interface implemented by all the plugins
+ * that may or not be loaded runtime.
+ *
+ * @image html plugin.overview.001.png "Overview"
+ *
+ * @section implementation Implementation Detail
+ *
+ * The Plugin Template (plugin.hpp) is basically a template library helper that
+ * must be used to create any kind of generic plugin.
+ *
+ * Once defined a custom cpp interface and the required parameters used by this custom interface (as typedef or struct or class or another plugin or ...),
+ * the plugin template must be used to define a Factory Interface implemented in any plugin
+ * and used to create a new Plugin Specific Interface.
+ *
+ * @image html plugin.detail.001.png
+ *
+ * @subsection customInterfaceExample Custom Interface and Parameters example
+ * @code{.cpp}
+ *   class CustomInterface
+ *   {
+ *     public:
+ *       CustomInterface(){};
+ *       virtual int getValue() = 0;
+ *   };
+ *
+ *   struct CustomParameters {
+ *       int initialValue;
+ *       int maxValue;
+ *   };
+ * @endcode
+ *
+ * @subsection customFactoryInterfaceExample Definition of the Custom Factory Interface
+ * @code{.cpp}
+ *   typedef OpenAB_Plugin::Factory<CustomInterface, CustomParameters> CustomFactory;
+ * @endcode
+ *
+ *
+ * @section detailedExample Detailed Example
+ *
+ * @subsection exmpleOverview Overview
+ *
+ * @image html plugin.example.detail.001.png
+ *
+ * @subsection step1 Step 1: Definition of a generic interface.
+ *
+ * File (genericInterface.hpp)
+ * @include plugin/example/genericInterface.hpp
+ *
+ * File (genericInterface.cpp)
+ * @include plugin/example/genericInterface.cpp
+ *
+ * @subsection step2 Step 2: Plugin implementation.
+ *
+ * Definition of all the Plugins that implement the required interface;
+ * 
+ * File (plugin1.cpp)
+ * @include plugin/example/plugin1.cpp
+ *
+ * File (plugin2.cpp)
+ * @include plugin/example/plugin2.cpp
+ *
+ * @subsection step3 Step 3: Usage inside the main code
+ *
+ * Use the interface, referencing the plugins simply by name
+ *
+ * @note
+ * The main program does not have any knowledge of the plugin code except the name.
+ * This mechanism allow to add or remove plugins without modifying/rebuild the main code.
+ * The name of the plugin used as simple txt name can be an external input or be stored in a config file.
+ *
+ * File (main.cpp)
+ * @include plugin/example/main.cpp
+ *
+ * @{
+ */

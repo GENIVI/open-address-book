@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Surname;Name;Middle;Prefix;Suffix
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Surname;Name;Middle;Prefix;Suffix
+PHOTO:photo.gif
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Surname;Name;Middle;Prefix;Suffix
+END:VCARD

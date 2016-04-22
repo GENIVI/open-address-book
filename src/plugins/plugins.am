@@ -1,0 +1,13 @@
+include $(top_srcdir)/src/plugins/pbap/pbap.am
+if CARDDAV
+include $(top_srcdir)/src/plugins/carddav/carddav.am
+endif
+if GOOGLE_CONTACTS
+include $(top_srcdir)/src/plugins/google/google.am
+endif
+include $(top_srcdir)/src/plugins/file/file.am
+if EDS_BACKEND
+include $(top_srcdir)/src/plugins/eds/eds.am
+endif
+include $(top_srcdir)/src/plugins/onewaysync/onewaysync.am
+include $(top_srcdir)/src/plugins/twowaysync/twowaysync.am

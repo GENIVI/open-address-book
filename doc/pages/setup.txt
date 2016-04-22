@@ -1,0 +1,144 @@
+/*!
+ * @page  setupOpenAB Setup and Build
+ *
+ * @tableofcontents
+ *
+ * @section getSourceOpenAB Getting the Source Code
+ * 
+ * https://github.com/GENIVI/open-adress-book 
+ *
+ * @section buildOpenAB Building OpenAB
+ *
+ * In the main source tree, the file @b autogen.sh can be used to generate all the required files (Makefiles, Configure)
+ *
+ * @subsection buildLocalOpenAB Local OpenAB build
+ *
+ * This example explain the few steps required to build and install OpenAB in any folder (i.e. @b /tmp/OpenAB_inst)
+ *
+ * @subsubsection buildLocalOpenAB1  Setup the Environment
+ *
+ * As reference I'm using this folder structure:
+ *
+ * @li @b /tmp/OpenAB_src   : folder where the sources are stored
+ * @li @b /tmp/OpenAB_build : build folder (there is no restriction to use the same source folder)
+ * @li @b /tmp/OpenAB_examples : build folder (there is no restriction to use the same source folder)
+ * @li @b /tmp/OpenAB_inst  : the folder where everything will be installed (if not specified "/usr/local" is the default one)
+ *
+ * @code{bash}
+ *   mkdir /tmp/OpenAB_src
+ *   mkdir /tmp/OpenAB_build
+ *   mkdir /tmp/OpenAB_examples
+ *   mkdir /tmp/OpenAB_inst
+ * @endcode
+ *
+ * @subsubsection buildLocalOpenAB2  First configuration (autogen.sh)
+ *
+ * The @b autogen.sh script is responsible to launch the @b autoreconf and the @b configure script.
+ *
+ * It accept all the parameters that will be passed to the @b configure script.
+ *
+ * To show the @b configure options, just type:
+ *
+ * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   ../OpenAB_src/autogen.sh --help
+ * @endcode
+ *
+ * To start creating the building environment, use all the required configure parameters with autogen.
+ *
+ * @note In this example I'm enabling the EDS backend and the doxygen documentation build (these may not be available in the target system), please be aware of all the options that can be chosen using the @b --help command.
+ *
+ * @note The \b prefix where all the packages will be installed is defined in this phase. All the libraries, include, .pc and other files will reference this as base folder.
+ *
+ * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   ../OpenAB_src/autogen.sh --enable-eds-backend --enable-doc --prefix=/tmp/OpenAB_inst
+ * @endcode
+ * 
+ * @subsubsection buildLocalOpenAB3  Build and Install
+ * 
+ * All the Makefiles are generated using the previous command, it is time to build and install.
+ *
+ * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   make install
+ * @endcode
+ *
+ * @subsubsection buildLocalOpenAB4  Tests and Examples
+ *
+ * @b 1) Copy the source examples in the @b OpenAB_examples folder 
+ *
+ * @code{bash}
+ *   cd /tmp/OpenAB_examples
+ *   cp ../OpenAB_src/test/plugin/example/* .
+ * @endcode
+ *
+ * @b 2) Since the package has been installed in a non standard folder, the @b pkg-config tool is not able to find it unless specified in the @b PKG_CONFIG_PATH variable
+ *
+ * @code{bash}
+ *   export PKG_CONFIG_PATH=/tmp/OpenAB_inst/lib/pkgconfig
+ * @endcode
+ *
+ * all the OpenAB libraries have their own @b .pc file defined. A full list of OpenAB libraries can be retrieved using:
+ * @code{bash} 
+ *   pkg-config --list-all | grep OpenAB
+ * @endcode
+ *
+ * @b 3) Everything is on place to build any source code using the OpenAB tools
+ *
+ * These files are explained in @ref detailedExample
+ *
+ * To build the plugin object, use:
+ *
+ * @code{bash}
+ *   g++ plugin*.cpp `pkg-config OpenAB_plugin --libs --cflags` -shared -fPIC -o libPlugin.so
+ * @endcode
+ *
+ * To build the executable, use:
+ *
+ * @code{bash}
+ *   g++ main.cpp genericInterface.cpp \
+ *       `pkg-config OpenAB_plugin --libs --cflags` \
+ *       -DEXAMPLE_SHARED \
+ *       -o sharedExample.out
+ * @endcode
+ *
+ * @section quality Quality checks
+ * @subsection unitTests Unit Tests
+ * @subsubsection runningTests Running Unit Tests
+ *
+ * To enable unit tests build provide @b --enable-tests option to @b configure script (enabled by default).
+ * Unit tests require GTest to be installed, in case where it won't be detected, unit tests will be simply disabled.
+ * To build and run unit tests just type @b make @b check after configuring project with unit tests support.
+  * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   ../OpenAB_src/autogen.sh --enable-eds-backend --enable-doc --enable-tests --prefix=/tmp/OpenAB_inst
+ *   make check
+ * @endcode
+ *
+ 
+ * @subsubsection generateCoverage Generating coverage report
+ * To be able to generate coverage report provide @b --enable-coverage option to @b configure script (disabled by default).
+ * This feature requires LCov and Genhtml tools to be installed, simillar like in case of unit tests, if one of these tools won't ba available, coverage will be automatically disabled.
+ * To generate coverage report just type @b make @b generate-coverage, it will build unit tests, run them and generate HTML coverage report in tests/coveragereport folder.
+ * To clear coverage calculations use @b make @b clean-coverage.
+ * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   ../OpenAB_src/autogen.sh --enable-eds-backend --enable-doc --enable-tests --enable-coverage --prefix=/tmp/OpenAB_inst
+ *   make generate-coverage
+ *   #coverage report will be generated in /tmp/OpenAB_build/tests/coveragereport
+ * @endcode
+ *
+ * @subsection cppcheck Cppcheck
+ * If Cppcheck if installed additional make taget will be available - @b cppcheck - that will run static code analysis using Cppcheck 
+ * @code{bash}
+ *   cd /tmp/OpenAB_build
+ *   make cppcheck
+ * @endcode
+ *
+ * @section mainPlugin Plugins
+ *  
+ * -# @link pluginInterface Plugin Interface (Overview and Examples) @endlink
+ * -# @link pluginGroup List of available plugins @endlink
+ *
+ */

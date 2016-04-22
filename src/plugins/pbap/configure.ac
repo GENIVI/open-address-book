@@ -1,0 +1,2 @@
+#for GDBus
+PKG_CHECK_MODULES([GIO],[gio-2.0])

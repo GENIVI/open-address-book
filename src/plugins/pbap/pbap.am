@@ -1,0 +1,8 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_source_pbap.la
+
+libOpenAB_plugin_source_pbap_la_SOURCES = \
+	plugins/pbap/PBAP.cpp \
+	plugins/pbap/BluezOBEXTransfer.cpp
+libOpenAB_plugin_source_pbap_la_CPPFLAGS = -I$(top_srcdir)/src -I$(srcdir)/pbap $(CFLAGS) $(GIO_CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_source_pbap_la_LDFLAGS = $(GIO_LIBS) $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_source_pbap_la_LIBADD = libOpenAB.la

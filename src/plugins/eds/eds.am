@@ -1,0 +1,21 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_addressbook_eds.la
+
+libOpenAB_plugin_addressbook_eds_la_SOURCES = \
+   	plugins/eds/EDSContactsStorageItemIterator.cpp \
+   	plugins/eds/EDSContactsStorage.cpp
+   	
+libOpenAB_plugin_addressbook_eds_la_CPPFLAGS = -I$(top_srcdir)/src $(EDS_CFLAGS) $(ICAL_CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_addressbook_eds_la_LDFLAGS = -version-info 0:0:0 $(EDS_LIBS) $(ICAL_LIBS) $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_addressbook_eds_la_LIBADD = libOpenAB.la
+
+
+pkglib_LTLIBRARIES += libOpenAB_plugin_calendar_eds.la
+
+libOpenAB_plugin_calendar_eds_la_SOURCES = \
+   	plugins/eds/EDSCalendarStorageItemIterator.cpp \
+   	plugins/eds/EDSCalendarStorage.cpp \
+   	plugins/eds/EDSCalendarStorageCommon.cpp
+   	
+libOpenAB_plugin_calendar_eds_la_CPPFLAGS = -I$(top_srcdir)/src $(EDS_CFLAGS) $(ICAL_CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_calendar_eds_la_LDFLAGS = -version-info 0:0:0 $(EDS_LIBS) $(ICAL_LIBS) $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_calendar_eds_la_LIBADD = libOpenAB.la

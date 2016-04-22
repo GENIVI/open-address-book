@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Surname1;Name1;Middle1;Perfix1;Suffix1
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Surname2;Name2;Middle2;Perfix2;Suffix2
+END:VCARD

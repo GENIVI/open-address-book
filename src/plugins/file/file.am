@@ -1,0 +1,7 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_source_file.la
+
+libOpenAB_plugin_source_file_la_SOURCES = \
+    plugins/file/File.cpp
+libOpenAB_plugin_source_file_la_CPPFLAGS = -I$(top_srcdir)/src $(CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_source_file_la_LDFLAGS = $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_source_file_la_LIBADD = libOpenAB.la

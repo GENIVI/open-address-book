@@ -1,0 +1,27 @@
+/*!
+ * @mainpage  OpenAB - (Open Address Book)
+ *
+ * @tableofcontents
+ *
+ * @section intro Introduction
+ *
+ * OpenAB is a set of helper libraries that can be used to implement any PIM functionalities.
+ *
+ * It is a Plugin based library. New functionalities/customizations may be implemented using its plugin mechanism.
+ *
+ * @image html OpenAB.overview.001.png
+ *
+ * @section setupMain Getting Started
+ *
+ * @link setupOpenAB Setup and Build instructions @endlink
+ *
+ * @section mainLibOpenAB OpenAB Library
+ *
+ * -# @ref libOpenAB
+ *
+ * @section mainPlugin Plugins
+ *  
+ * -# @link pluginInterface Plugin Interface (Overview and Examples) @endlink
+ * -# @link pluginGroup List of available plugins @endlink
+ *
+ */

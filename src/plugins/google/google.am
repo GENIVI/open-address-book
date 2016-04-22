@@ -1,0 +1,10 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_source_google.la
+libOpenAB_plugin_source_google_la_SOURCES = \
+   	plugins/google/Google.cpp \
+   	plugins/google/GDataContactsConverter.cpp \
+   	plugins/google/GDataOAuth2Authorizer.c
+
+libOpenAB_plugin_source_google_la_CPPFLAGS = -I$(top_srcdir)/src $(CFLAGS) $(GDATA_CFLAGS) $(SOUP_CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_source_google_la_CFLAGS = -std=gnu99
+libOpenAB_plugin_source_google_la_LDFLAGS = $(GDATA_LIBS) $(SOUP_LIBS) $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_source_google_la_LIBADD = libOpenAB.la

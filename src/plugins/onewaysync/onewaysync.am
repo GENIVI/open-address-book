@@ -1,0 +1,7 @@
+pkglib_LTLIBRARIES += libOpenAB_plugin_sync_oneway.la
+
+libOpenAB_plugin_sync_oneway_la_SOURCES = \
+    plugins/onewaysync/OneWaySync.cpp 
+libOpenAB_plugin_sync_oneway_la_CPPFLAGS = -I$(top_srcdir)/src -I$(srcdir)/one-way $(CFLAGS) $(COVERAGE_CFLAGS)
+libOpenAB_plugin_sync_oneway_la_LDFLAGS = $(PLUGIN_FLAGS) $(COVERAGE_LDFLAGS)
+libOpenAB_plugin_sync_oneway_la_LIBADD = libOpenAB.la

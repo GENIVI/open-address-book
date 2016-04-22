@@ -1,0 +1,115 @@
+/**
+ * @defgroup  libOpenAB  OpenAB Library
+ 
+## Classes hierarchy Overview ##
+ * @image html ClassOverview.png
+ */
+
+
+/**
+ * @defgroup PIMItems PIM Items
+ * @ingroup libOpenAB
+ *
+ *
+ ## Overview ##
+ *
+ * OpenAB::PIMItem represents single personal information item like:
+ *  - contact (@ref OpenAB::PIMContactItem)
+ *  - calendar item (@ref OpenAB::PIMCalendarItem)
+ *  - task item (@ref OpenAB::PIMTaskItem)
+ * in future more types can be added.
+ *
+ * PIM Items are provided by Sources (@ref OpenAB_Source::Source) and can be stored in Storage (@ref OpenAB_Storage::Storage) either
+ * by manually adding/removing/modifying them using OpenAB_Storage::Storage API or by synchronization process (@ref OpenAB_Sync::Sync).
+ *
+ * Each OpenAB::PIMItem provides index (@ref OpenAB::PIMItemIndex) that is used to uniquely identify it and
+ * allows for matching and comparison with other PIMItems.
+ *
+ * OpenAB::PIMItemIndex is representation of OpenAB::PIMItem, created based on definition of PIMItemIndex::PIMItemCheck for given PIMItem type (allows to define which fields should be taken in consideration when comparing items),
+ *  allowing for customization.
+ * OpenAB::PIMItemIndex is automatically created during creation of PIMItem.
+ *
+ * Each OpenAB::PIMItem can be created from format specific to given item type:
+ *  - contact from <b>vCard</b> (defined in <a href="http://tools.ietf.org/html/rfc2425">RFC 2425</a> and <a href="http://tools.ietf.org/html/rfc2426">RFC 2426</a>)
+ *  - calendar and tasks item from <b>iCalendar</b> (defined in <a href="http://tools.ietf.org/html/rfc5545">RFC 5545</a>, <a href="http://tools.ietf.org/html/rfc5546">RFC 5546</a> and <a href="http://tools.ietf.org/html/rfc6868">RFC 6868</a>)
+ *
+ * Way in which result of parsing input format are stored inside PIMIndex is up to implementation of PIMIndex
+ * classes, as both of above formats store data in key-value manner this is advised way of storing parsed data.
+ *
+ * If native format of items provided by OpenAB_Source::Source implementation is different of the one above, implementation needs to convert it to required one,
+ * the same applies for OpenAB_Storage::Storage implementations, if there is no native support for above formats, conversion needs to be implemented.
+ *
+ ## API Details ##
+ * Here is the list of most important functions provided by PIMItem and PIMItemIndex objects:
+ *  - @ref OpenAB::PIMItem::parse() (@copybrief OpenAB::PIMItem::parse())
+ *  - @ref OpenAB::PIMItem::getRawData() (@copybrief OpenAB::PIMItem::getRawData())
+ *  - @ref OpenAB::PIMItem::getIndex() (@copybrief OpenAB::PIMItem::getIndex())
+ *  - @ref OpenAB::PIMItemIndex::operator==() (@copybrief OpenAB::PIMItemIndex::operator==())
+ *  - @ref OpenAB::PIMItemIndex::compare() (@copybrief OpenAB::PIMItemIndex::compare())
+ * 
+ */
+ 
+ 
+ /**
+ * @defgroup Helpers Helpers
+ * @ingroup libOpenAB
+ *
+ *
+ ## Overview ##
+ *
+ * OpenAB provide couple of Helper classes:
+ *  - @ref OpenAB::Variant (@copybrief OpenAB::Variant)
+ *  - @ref OpenAB::SmartPtr (@copybrief OpenAB::SmartPtr)
+ *  - @ref OpenAB::PluginManager (@copybrief OpenAB::PluginManager)
+ *  - @ref OpenAB::Logger (@copybrief OpenAB::Logger)
+ *
+ *
+ ## Variant ##
+ *  OpenAB::Variant allows to store different types of data in one variable,
+ *  OBA::Variant objects are mostly used for providing parameters
+ *  (@ref OpenAB_Plugin::Parameters) to create new instances of OpenAB_Plugin::Plugin.
+ *
+ *  OpenAB::Variant currently supports data types like:
+ *  - characters
+ *  - booleans
+ *  - integers (signed and unsgined, 1,2,4 and 8-bytes of size)
+ *  - real numbers (floats and doubles)
+ *  - strings
+ *  - raw pointers
+ *
+ ## SmartPtr ##
+ *
+ * OpenAB::SmartPtr allows to safely pass around pointers to dynamically allocated data.
+ * It automatically tracks reference count of pointer that it manages and frees it when no longer needed.
+ *
+ ## PluginManager ##
+ * OpenAB::PluginManager provides methods to discover new plugins and load/unload them on demand.
+ *
+ * PluginManager is implemented as singleton and can be accessed using OpenAB::PluginManager::getInstance() function.
+ *
+ * PluginManager keeps list of all known plugins and modules which are providing them, allowing to load modules
+ *  into memory on demand and unloading them when no longer needed,
+ *  keeping in this way overall memory footprint low.
+ *
+ ### Details of API ###
+ * Here is the list of most important functions provided by PluginManager:
+ * - OpenAB::PluginManager::scanDirectory (@copybrief OpenAB::PluginManager::scanDirectory)
+ * - OpenAB::PluginManager::isPluginAvailable (@copybrief OpenAB::PluginManager::isPluginAvailable)
+ * - OpenAB::PluginManager::getPluginInstance (@copybrief OpenAB::PluginManager::getPluginInstance)
+ * - OpenAB::PluginManager::freePluginInstance (@copybrief OpenAB::PluginManager::freePluginInstance)
+ *
+ ## Logger ##
+ * OpenAB::Logger provides set of macros that are used by OpenAB to log messages.
+ * Client applications can provide their own implementations of OpenAB::Logger to
+ * override way in which messages from OpenAB are logged.
+ *
+ * usage Example:
+ * \code{.cpp}
+ *   void example(){
+ *      LOG_FUNC();   // Output the name of the function and the line number, there is no need to use std::endl
+ *      LOG()         << "test normal (by default Info) message"<<std::endl;
+ *      LOG_VERBOSE() << "test verbose message"<<std::endl;
+ *      LOG_FATAL()   << "test fatal message, number:" << 10 <<std::endl;
+ *   }
+ * \endcode
+ */
